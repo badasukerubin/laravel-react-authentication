@@ -14,6 +14,6 @@ class Login extends Component {
         <LoginContainer redirect={this.state.redirect} />
       </div>
     )
-  } 
+  }
 }
 export default withRouter(Login)

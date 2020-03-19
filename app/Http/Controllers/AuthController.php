@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-     /**
+    /**
      * Create user
      *
      * @param  [string] name
@@ -34,7 +37,7 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'id' => $user->id,
-            'name' => $user->first_name,
+            'name' => $user->name,
             'email' => $user->email,
         ], 201);
     }
@@ -59,8 +62,6 @@ class AuthController extends Controller
         ]);
 
         $credentials = request(['email', 'password']);
-        $credentials['active'] = 1;
-        $credentials['deleted_at'] = null;
 
         if (!Auth::attempt($credentials))
             return response()->json([
@@ -77,7 +78,7 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'id' => $user->id,
-            'name' => $user->first_name,
+            'name' => $user->name,
             'email' => $user->email,
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
